@@ -1,0 +1,19 @@
+{% extends 'resources/base.html' %}
+
+{% block content %}
+<a href="create/">
+    <button style="background-color: #7c8081; color: white;">+ Create</button>
+</a>
+{% for object in objects %}
+
+<h3>{{object.id}}. {{object.title}}</h3>
+<i>{{object.created_by}}</i>
+{% comment %} <button type="" style="background-color: #21d6e6; color: white;"0>View</button> {% endcomment %}
+<a href="/resources/{{object.id}}/">
+    <button style="background-color: #21d6e6; color: white;">View</button>
+</a>
+
+<br> <br>
+{% endfor%}
+
+{% endblock %}

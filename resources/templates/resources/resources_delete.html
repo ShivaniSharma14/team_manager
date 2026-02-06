@@ -1,0 +1,20 @@
+{% extends 'resources/base.html' %}
+
+{% block content %}
+<h1>Delete the post</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <h3>
+    <b>{{object.title}}</b>
+    <i>{{object.created_by}}</i>
+    </h3>
+    <br>
+
+    <button type="submit" style="background-color: #FF0000; color: white;">Delete</button>
+    
+    <a href="../../">Cancel</a>
+   
+
+</form>
+{% endblock %}

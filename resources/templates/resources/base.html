@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Team Resource Manager{% endblock %}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 76px;
+        }
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        .nav-link {
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #0d6efd !important;
+        }
+        .content-section {
+            padding: 60px 0;
+        }
+        
+        /* User Info Styles */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 25px;
+            margin-right: 15px;
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .user-name {
+            color: white;
+            font-weight: 500;
+            font-size: 14px;
+            margin: 0;
+        }
+        
+        .logout-button, .register-button {
+            padding: 8px 20px;
+            border: 2px solid white;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .logout-button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .logout-button:hover {
+            background: white;
+            color: #0d6efd;
+        }
+        
+        .register-button {
+            background: white;
+            color: #0d6efd;
+            margin-left: 10px;
+        }
+        
+        .register-button:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+        }
+        
+        .logout {
+            margin: 0;
+            display: inline-block;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .user-name {
+                display: none;
+            }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'resource-page' %}">
+                <i class="fas fa-rocket me-2"></i>Team Resource Manager
+            </a>
+           
+            <div class="d-flex align-items-center">
+                {% if user.is_authenticated %}
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            {% if user.first_name and user.last_name %}
+                                {{ user.first_name|first|upper }}{{ user.last_name|first|upper }}
+                            {% else %}
+                                {{ user.username|first|upper }}{{ user.username|slice:"1:2"|upper }}
+                            {% endif %}
+                        </div>
+                        <span class="user-name">
+                            {% if user.get_full_name %}
+                                {{ user.get_full_name }}
+                            {% else %}
+                                {{ user.username }}
+                            {% endif %}
+                        </span>
+                    </div>
+                    
+                    <form class="logout" action="{% url 'logout' %}" method="POST">
+                        {% csrf_token %}
+                        <button class="logout-button" aria-label="User Logout" title="User Logout">
+                            <i class="fas fa-sign-out-alt me-1"></i>Logout
+                        </button>
+                    </form>
+                {% else %}
+                    <div class="auth-buttons">
+                        <a href="{% url 'login' %}">
+                            <button class="logout-button" aria-label="User Login" title="User Login">
+                                <i class="fas fa-sign-in-alt me-1"></i>Login
+                            </button>
+                        </a>
+                        <a href="{% url 'register' %}">
+                            <button class="register-button" aria-label="User Register" title="User Register">
+                                <i class="fas fa-user-plus me-1"></i>Sign Up
+                            </button>
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

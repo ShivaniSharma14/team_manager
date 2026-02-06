@@ -1,0 +1,28 @@
+{% extends 'resources/base.html' %}
+
+{% block content %}
+<h2>{{object.title}}</h2>
+<p>
+<strong>{{object.description}}</strong> <br>
+<i>{{object.created_by}}</i> <br>
+{{object.created_at}} <br>
+</p>
+
+{% if request.user == object.created_by or perms.resources.change_resource %}
+<a href="{% url 'resource-update' object.id %}">
+    <button style="background-color: #3134fe; color: white;">Edit</button>
+</a>
+{% endif %}
+
+{% if request.user == object.created_by or perms.resources.delete_resource %}
+<a href="{% url 'resource-delete' object.id %}">
+    <button style="background-color: #e91010; color: white;">Delete</button>
+</a>
+{% endif %}
+
+<a href="{% url 'resource-page' %}">
+    <button style="background-color: #7b969b; color: white;">Back</button>
+</a>
+
+
+{% endblock %}

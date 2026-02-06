@@ -1,0 +1,21 @@
+{% extends 'resources/base.html' %}
+
+{% block content %}
+<h1> Update the post: </h1>
+<form action="." method="POST">
+    {% csrf_token %}
+    <br>
+    {{form.title.label}}: {{form.title}}
+    <br>
+    <br>
+    {{form.description.label}}: {{form.description}}
+    <br>
+    <br>
+    <button type="submit" style="background-color: #0f6cee; color: white;">Update</button>
+
+    <a href="../">
+    <button style="background-color: #7b969b; color: white;">Back</button>
+    </a>
+</form>
+
+{% endblock %}

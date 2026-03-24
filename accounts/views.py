@@ -20,7 +20,7 @@ def register(request):
 
 def login_view(request):
     if request.user.is_authenticated:
-        return redirect("resource_list")  # replace with your actual URL name
+        return redirect("resource-page")
 
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -33,10 +33,9 @@ def login_view(request):
             if next_url:
                 return redirect(next_url)
 
-            return redirect("resource_list")  # replace with your actual URL name
+            return redirect("resource-page")
 
         messages.error(request, "Username or password is invalid.")
-
     else:
         form = AuthenticationForm()
 
@@ -51,3 +50,4 @@ def logout_view(request):
         return redirect("login")
 
     return render(request, "registration/logout.html")
+    
